@@ -24,7 +24,7 @@
 			let firstLetter = true;
 
 			let text = '高等計算機圖學作業';	//中間的旋轉字
-			let timeText = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+			let timeText = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥', '高等計算機圖學作業'];
 			//let timeText = ['12', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '11'];
 			const height = 20,
 				size = 20,
@@ -56,7 +56,7 @@
 				// CAMERA
 				// (fov 視野角度, aspect ratio 長寬比例[使用寬除以高], near 相機到該數值之間的物體不會顯示, far 該數值以外的物體不會顯示)
 				camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 1, 1500 );
-				camera.position.set( 0, 500, 700 ); //設定相機位置(x, y, z)
+				camera.position.set( 0, 650, 700 ); //設定相機位置(x, y, z)
 
 				cameraTarget = new THREE.Vector3( 0, 150, 0 ); //拍攝目標的位置(x, y, z)
 
@@ -137,7 +137,7 @@
 
 					// firstLetter = false;
 					// text = '';
-					for(i=0; i < 12; i++){
+					for(i=0; i < 13; i++){
 						firstLetter = false;
 						timeText[i] = '';
 					}
@@ -153,7 +153,7 @@
 					event.preventDefault();
 
 					// text = text.substring( 0, text.length - 1 );
-					for(i=0; i < 12; i++){
+					for(i=0; i < 13; i++){
 						timeText = timeText.substring(0, timeText.length - 1);
 						refreshText();
 					}
@@ -179,7 +179,7 @@
 
 					const ch = String.fromCharCode( keyCode );
 					// text += ch;
-					for(i=0; i < 12; i++){
+					for(i=0; i < 13; i++){
 						timeText += ch;
 						refreshText();
 					}
@@ -222,7 +222,7 @@
 
 				// group.add( textMesh1 );
 
-				for(i=0; i < 12; i++){
+				for(i=0; i < 13; i++){
 					textGeo = new THREE.TextGeometry( timeText[i], {
 						font: font,
 
@@ -279,6 +279,9 @@
 					else if(i == 11){ // 亥
 						addMesh(textMesh1, -45, 78, 0, centerOffset);
 					}
+					else if(i == 12){ // 高等計算機圖學作業
+						addTitle(textMesh1, 0, -120, 100, centerOffset, Math.PI * -0.5, 0);
+					}
 
 					// textMesh1.position.x = centerOffset;
 					// textMesh1.position.y = hover;
@@ -317,12 +320,22 @@
 				group.add( textMesh );
 			}
 
+			function addTitle(textMesh, pointX, pointY, pointZ, centerOffset, rotX, rotY){
+				textMesh.position.x = centerOffset + pointX;
+				textMesh.position.y = hover + pointY;
+				textMesh.position.z = pointZ;
+
+				textMesh.rotation.x = rotX;
+				textMesh.rotation.y = rotY;
+				group.add( textMesh );
+			}
+
 			function refreshText() {
 
 				group.remove( textMesh1 );
 				if ( mirror ) group.remove( textMesh2 );
 
-				for(i=0; i < 12; i++){
+				for(i=0; i < 13; i++){
 					if( ! timeText[i] ) return;
 				}
 				// if ( ! text ) return;
